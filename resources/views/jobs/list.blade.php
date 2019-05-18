@@ -18,10 +18,11 @@
                 Option
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <p>{{ $job->status }}</p>
                 @if ($job->status == 'show')
                   <button type="submit" name="status" value="hide" class="dropdown-item">Hide</button>
                 @else
-                  <button type="submit" name="status" value="hide" class="dropdown-item">Show</button>
+                  <button type="submit" name="status" value="show" class="dropdown-item">Show</button>
                 @endif
                 <a class="dropdown-item" href="/jobs/{{ $job->id}}/edit">Edit</a>
               </div>
