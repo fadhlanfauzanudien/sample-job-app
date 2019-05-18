@@ -18,7 +18,6 @@
                 Option
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <p>{{ $job->status }}</p>
                 @if ($job->status == 'show')
                   <button type="submit" name="status" value="hide" class="dropdown-item">Hide</button>
                 @else
