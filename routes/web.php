@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('jobs', 'JobController');
+Route::put('changeJobStatus/{id}', 'JobController@changeStatus');
