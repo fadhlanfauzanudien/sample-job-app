@@ -19,7 +19,7 @@ class CreateJobsTable extends Migration
             $table->string('company');
             $table->text('description');
             $table->string('city');
-            $table->string('status');
+            $table->string('status')->default('hide');
             $table->timestamps();
         });
     }

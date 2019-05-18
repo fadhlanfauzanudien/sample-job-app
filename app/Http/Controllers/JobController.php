@@ -25,7 +25,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('jobs.create');
     }
 
     /**
@@ -36,7 +36,8 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Job::create($request->all());
+        return redirect('/jobs');
     }
 
     /**
@@ -58,7 +59,8 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        //
+        $job = Job::find($id);
+        return view('jobs.edit')->with('job', $job);
     }
 
     /**
@@ -70,7 +72,9 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $job = Job::find($id);
+        $job->update($request->all());
+        return redirect('/jobs');
     }
 
     /**
@@ -81,13 +85,21 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Job::destroy($id);
+        return back();
     }
 
+    /**
+     * Change job status. 
+     * if status is show then job will be showed in index
+     * otherwise will be hidden from non admin user
+     */
     public function changeStatus(Request $request, $id)
     {
         $job = Job::find($id);
         $job->status = $request->status;
         $job->save();
+
+        return back();
     } 
 }
