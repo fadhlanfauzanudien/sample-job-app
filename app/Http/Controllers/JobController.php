@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Http\Requests\JobRequest;
 use \App\Job;
 
 class JobController extends Controller
@@ -34,7 +35,7 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(JobRequest $request)
     {
         Job::create($request->all());
         return redirect('/jobs');
@@ -70,7 +71,7 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(JobRequest $request, $id)
     {
         $job = Job::find($id);
         $job->update($request->all());
