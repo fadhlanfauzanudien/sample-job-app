@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use \App\Http\Requests\ImageRequest;
+use \App\Image;
 
-class ProfileController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        // get user firstname and lastname to display in index view
-        $firstname = Auth::user()->firstname;
-        $lastname = Auth::user()->lastname;
-        $date = Auth::user()->date_of_birth;
-        $email = Auth::user()->email;
-
-        $profile = Auth::user()->profile;
-        return view('profiles.index', compact(['firstname', 'lastname', 'date', 'email', 'profile']));
+        //
     }
 
     /**
@@ -31,7 +26,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -40,9 +35,26 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
-        \App\Profile::create($request->all());
+        // upload file ke server
+        // dapatkan file dari form
+        $file = $request->file('imageFile');
+        // set destinasi
+        $destination_path = 'uploads/';
+        // nama file ditambah dengan random string
+        $filename = str_random(6).'_'.$file->getClientOriginalName();
+        
+        $file->move($destination_path, $filename);
+
+        // save file ke database
+        $path = $destination_path . $filename;
+        
+        $image = new Image();
+        $image->file = $path;
+        $image->user_id = Auth::user()->id;
+        $image->save();
+
         return back();
     }
 
@@ -77,8 +89,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \App\Profile::find($id)->update($request->all());
-        return back();
+        //
     }
 
     /**
@@ -90,10 +101,5 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function uploadImage($id)
-    {
-        
     }
 }

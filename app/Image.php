@@ -4,12 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Image extends Model
 {
-    protected $guarded = ['id'];
-
     public function user()
     {
-        return $this->belongsTo(User::app);
+        return $this->belongsTo(User::class);
     }
 }

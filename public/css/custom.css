@@ -9,6 +9,7 @@ html {
 
 body {
   font-family: 'Nunito', sans-serif;
+  background-color: rgb(248, 247, 247);
 }
 
 .content {
@@ -75,4 +76,17 @@ body {
 
 .profile-form .form-row {
   margin-bottom: 10px;
+}
+
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 20px auto;
+}
+
+.info {
+  background-color: #fff;
+  padding: 10px 30px 40px 30px;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, .1);
 }
