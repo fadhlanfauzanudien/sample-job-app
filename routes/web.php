@@ -17,3 +17,7 @@ Route::get('/', function () {
 
 Route::resource('jobs', 'JobController');
 Route::put('changeJobStatus/{id}', 'JobController@changeStatus');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
