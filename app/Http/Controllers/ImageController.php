@@ -89,7 +89,17 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $image = Image::find($id);
+
+            if ($request->hasFile('imageFile')) {
+                $file = $request->file('imageFile');
+                $filename = str_replace('uploads/', '', $image->file);
+                // nama file ditambah dengan random string
+                $destination_path = 'uploads/';
+                $file->move($destination_path, $filename);
+                $image->file = $destination_path . $filename;
+                $image->save();
+            }
     }
 
     /**

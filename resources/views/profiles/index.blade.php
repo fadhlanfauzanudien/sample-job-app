@@ -7,8 +7,9 @@
     
     <h1 class="mt-3 text-center">Your Personal Profile</h1>
     @if(Auth::user()->image != null)
-      <form action="" method="POST" enctype="multipart/form-data" class="border-top mt-5">
+      <form action="/image/{{ Auth::user()->image->id }}" method="POST" enctype="multipart/form-data" class="border-top mt-5">
         @csrf
+        @method('PUT')
         <div class="form-row pt-5 mt-3">
           <div class="input-group col-5 mx-auto mb-5 d-flex flex-column justify-content-center">
             <img class="profile-photo" src="{{ Auth::user()->image->file }}" alt="profile=photo">
@@ -64,11 +65,11 @@
       <div class="form-row">
           <div class="form-group pl-0 col-6">
             <label for="dateOfBirth">Date Of Birth</label>
-            <input type="date" class="form-control" value="{{ $date }}">
+            <input type="date" class="form-control" value="{{ $date }}" readonly>
           </div>
         <div class="form-group col-6">
           <label for="email">Email</label>
-          <input class="form-control" type="email" name="email" value="{{ $email }}">
+          <input class="form-control" type="email" name="email" value="{{ $email }}" readonly>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Save</button>
