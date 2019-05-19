@@ -1,3 +1,4 @@
+@if($jobs->count() > 0)
 @foreach ($jobs as $job)
   <div class="card job">
     <div class="left">
@@ -37,3 +38,8 @@
     </div>
   </div>
 @endforeach
+@else
+
+  <h1 class="text-center">No Jobs Posted</h1>
+
+@endif

@@ -48,13 +48,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'date'  => ['required', 'date', 'before_or_equal:'.\Carbon\Carbon::now()->subYears(17)->format('Y-m-d')],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return Validator::make(
+            $data, 
+            [
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'date'  => ['required', 'date', 'before_or_equal:'.\Carbon\Carbon::now()->subYears(17)->format('Y-m-d')],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ], 
+            [
+                'firstname.required' => 'Firstname harus diisi',
+                'firstname.required' => 'Firstname harus diisi',
+                'date.before_or_equal' => 'Maaf, Anda harus berumur minimal 17 tahun untuk mendaftar'  
+            ]
+        );
     }
 
     /**

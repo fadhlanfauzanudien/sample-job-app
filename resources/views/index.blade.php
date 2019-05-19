@@ -3,5 +3,5 @@
 @section('title', 'Search Job')
 
 @section('content')
-    @include('jobs.list');
+    @include('jobs.list')
 @endsection

@@ -66,3 +66,13 @@ body {
   padding-bottom: 0;
 }
 
+
+/* Profile */
+
+.profile-form {
+  max-width: 800px !important;
+}
+
+.profile-form .form-row {
+  margin-bottom: 10px;
+}
