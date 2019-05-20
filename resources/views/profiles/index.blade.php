@@ -26,7 +26,6 @@
           </div>
         </div>
       </form>
-    
     @else
       <form action="{{ route('image.store') }}" method="POST" enctype="multipart/form-data">
         @csrf

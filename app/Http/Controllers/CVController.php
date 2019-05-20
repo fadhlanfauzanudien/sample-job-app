@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Http\Requests\JobRequest;
-use \App\Job;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PDFRequest;
 
-class JobController extends Controller
+class CVController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
-        return view('index')->with('jobs', $jobs);
+        //
     }
 
     /**
@@ -26,7 +25,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        return view('jobs.create');
+        //
     }
 
     /**
@@ -35,10 +34,18 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(JobRequest $request)
+    public function store(PDFRequest $request)
     {
-        Job::create($request->all());
-        return redirect('/jobs');
+        $file = $request->file('cvFile');
+        $path = $file->store('public/cv');
+        
+        $cv = new \App\CV();
+        $cv->file = $path;
+        $cv->name = $file->getClientOriginalName();
+        $cv->user_id = Auth::user()->id;
+        $cv->save();
+
+        return back();
     }
 
     /**
@@ -49,9 +56,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        $job = Job::find($id);
-
-        return view('jobs.show')->with('job', $job);
+        //
     }
 
     /**
@@ -62,8 +67,7 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $job = Job::find($id);
-        return view('jobs.edit')->with('job', $job);
+        //
     }
 
     /**
@@ -73,11 +77,18 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(JobRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $job = Job::find($id);
-        $job->update($request->all());
-        return redirect('/jobs');
+        $cv = \App\CV::find($id);
+        $file_exists = \Storage::exists($cv->file);
+        if($file_exists) {
+            \Storage::delete($cv->file);
+            $file = $request->file('cvFile');
+            $path = $file->store('public/cv');
+            $cv->file = $path;
+            $cv->name = $file->getClientOriginalName();
+            $cv->save();
+        }
     }
 
     /**
@@ -88,21 +99,17 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        Job::destroy($id);
-        return back();
+        
     }
 
-    /**
-     * Change job status. 
-     * if status is show then job will be showed in index
-     * otherwise will be hidden from non admin user
-     */
-    public function changeStatus(Request $request, $id)
+    public function upload()
     {
-        $job = Job::find($id);
-        $job->status = $request->status;
-        $job->save();
+        return view('cv.upload');
+    }
 
-        return back();
-    } 
+    public function download($id)
+    {
+        $cv = \App\CV::find($id);
+        return \Storage::download($cv->file, $cv->name);
+    }
 }

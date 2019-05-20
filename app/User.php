@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Image::class);
     }
+
+    public function CV()
+    {
+        return $this->hasOne(CV::class);
+    }
 }
