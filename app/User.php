@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(CV::class);
     }
+
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class);
+    }
 }

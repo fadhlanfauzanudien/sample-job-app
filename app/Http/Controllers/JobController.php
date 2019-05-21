@@ -124,4 +124,16 @@ class JobController extends Controller
 
         return back();
     } 
+
+    public function apply($id)
+    {
+        $job = Job::find($id);
+        $user = Auth::user();
+        if ($user->cv->status === 'accepted') {
+            $user->jobs()->attach($job);
+            return 'Lamaran telah dikirim!';
+        } else {
+            return 'CV anda belum di accept';
+        }
+    }
 }

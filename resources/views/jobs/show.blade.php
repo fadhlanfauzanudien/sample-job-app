@@ -10,7 +10,8 @@
       <p class="mt-5">
         {{ $job->description }}
       </p>
-      <form action="">
+      <form action="/jobs/apply/{{ $job->id }}" method="POST">
+        @csrf
         <button type="submit" class="btn btn-success mt-5">Apply</button>
       </form>
     </div>

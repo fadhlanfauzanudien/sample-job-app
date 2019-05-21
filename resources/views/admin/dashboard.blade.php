@@ -33,7 +33,7 @@
       <div class="job__footer mt-2">
         <p class="job__location">Location: {{ $job->city }}</p>
         <div class="d-flex">
-          <form action="/changeJobStatus/{{ $job->id }}" method="POST">
+          <form action="/jobs/changeJobStatus/{{ $job->id }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <div class="dropdown">

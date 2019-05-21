@@ -16,8 +16,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('jobs', 'JobController');
-Route::put('changeJobStatus/{id}', 'JobController@changeStatus');
+Route::resource('/jobs', 'JobController');
+Route::put('/jobs/changeJobStatus/{id}', 'JobController@changeStatus');
+Route::post('/jobs/apply/{id}', 'JobController@apply');
 
 Auth::routes();
 
