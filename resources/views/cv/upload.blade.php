@@ -11,6 +11,15 @@
         <div class="form-row pt-5 mt-3">
           <div class="input-group col-5 mx-auto mb-5 d-flex flex-column justify-content-center">
             <div class="align-self-center d-flex flex-column align-items-center">
+              <div class="align-self-end my-2">
+                @if (Auth::user()->cv->status === 'unread')  
+                  <span class="badge badge-info">unread</span>
+                @elseif (Auth::user()->cv->status === 'accepted')
+                  <span class="badge badge-success">accepted</span>
+                @elseif (Auth::user()->cv->status === 'rejected')
+                <span class="badge badge-danger">rejected</span>
+                @endif
+              </div>
               <img class="mb-1" src="{{ asset('/images/icon-cv.png') }}" alt="cv icon" width="100" height="100">
               <p>{{ Auth::user()->cv->name }}</p>
               <a class="btn btn-success align-self-center mb-5" href="download/{{ Auth::user()->cv->id }}">Download</a>
