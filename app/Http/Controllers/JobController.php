@@ -130,10 +130,19 @@ class JobController extends Controller
         $job = Job::find($id);
         $user = Auth::user();
         if ($user->cv->status === 'accepted') {
-            $user->jobs()->attach($job);
-            return 'Lamaran telah dikirim!';
+            $user->jobs()->syncWithoutDetaching($job);
+
+            $message = 'Lamaran telah dikirim!'; 
+            $nextPage = '/jobs';
+            return view('jobs.apply', compact('message', 'nextPage'));
+        } elseif ($user->cv->status === 'unread') {
+            $message = 'Your CV has not been accepted by admin';
+            $nextPage = '/jobs';
+            return view('jobs.apply', compact('message', 'nextPage'));
         } else {
-            return 'CV anda belum di accept';
+            $message = 'Your CV has been Rejected! Please re-upload your new CV';
+            $nextPage = '/cv/upload';
+            return view('jobs.apply', compact('message', 'nextPage'));
         }
     }
 }
