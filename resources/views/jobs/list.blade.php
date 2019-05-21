@@ -10,30 +10,7 @@
       <p class="job__description">{!! str_limit($job->description, 150) !!}</p>
       <div class="job__footer mt-2">
         <p class="job__location">Location: {{ $job->city }}</p>
-        <div class="d-flex">
-          <form action="/changeJobStatus/{{ $job->id }}" method="POST">
-            {{ csrf_field() }}
-            {{ method_field('PUT') }}
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Option
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @if ($job->status == 'show')
-                  <button type="submit" name="status" value="hide" class="dropdown-item">Hide</button>
-                @else
-                  <button type="submit" name="status" value="show" class="dropdown-item">Show</button>
-                @endif
-                <a class="dropdown-item" href="/jobs/{{ $job->id}}/edit">Edit</a>
-              </div>
-            </div>
-          </form>
-          <form action="/jobs/{{ $job->id }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-link" href="">Delete</button>
-          </form>
-        </div>
+
       </div>      
     </div>
   </div>

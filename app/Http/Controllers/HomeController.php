@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if ($user->email === 'admin@example.com') {
+            return redirect('/admin/dashboard');
+        } else if ($user->profile != null) {
+            return redirect('/jobs');
+        } else {
+            return redirect('/profile');
+        }
         return view('home');
     }
 }

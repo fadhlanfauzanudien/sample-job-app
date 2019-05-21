@@ -40,7 +40,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/jobs">Jobs</a>
                         </li>
-                        
+                        @if (Gate::allows('view-admin-dashboard'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">Admin Dashboard</a>
+                        </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

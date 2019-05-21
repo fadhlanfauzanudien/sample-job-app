@@ -22,10 +22,12 @@ Route::put('changeJobStatus/{id}', 'JobController@changeStatus');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('profile', 'ProfileController');
+Route::resource('profile', 'ProfileController')->middleware('auth');
 Route::resource('image', 'ImageController');
 Route::put('/user/{id}', 'UserController@update');
 
 Route::get('/cv/upload', 'CVController@upload');
 Route::get('/cv/download/{id}', 'CVController@download');
 Route::resource('/cv', 'CVController');
+
+Route::get('/admin/dashboard', 'AdminController@dashboard');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Http\Requests\JobRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use \App\Job;
 
 class JobController extends Controller
@@ -15,8 +17,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
-        return view('index')->with('jobs', $jobs);
+        $jobs = Job::all()->where('status', 'show');
+
+        return view('jobs.index')->with('jobs', $jobs);
     }
 
     /**
@@ -26,7 +29,9 @@ class JobController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Job::class);
         return view('jobs.create');
+
     }
 
     /**
@@ -37,8 +42,10 @@ class JobController extends Controller
      */
     public function store(JobRequest $request)
     {
+        $this->authorize('create', Job::class);
         Job::create($request->all());
-        return redirect('/jobs');
+
+        return redirect('/admin/dashboard');
     }
 
     /**
@@ -63,6 +70,8 @@ class JobController extends Controller
     public function edit($id)
     {
         $job = Job::find($id);
+        $this->authorize('update', $job);
+
         return view('jobs.edit')->with('job', $job);
     }
 
@@ -76,8 +85,10 @@ class JobController extends Controller
     public function update(JobRequest $request, $id)
     {
         $job = Job::find($id);
+        $this->authorize('update', $job);
         $job->update($request->all());
-        return redirect('/jobs');
+
+        return redirect('/admin/dashboard');
     }
 
     /**
@@ -88,7 +99,10 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
+        $job = Job::find($id);
+        $this->authorize('delete', $job);
         Job::destroy($id);
+
         return back();
     }
 
@@ -100,6 +114,7 @@ class JobController extends Controller
     public function changeStatus(Request $request, $id)
     {
         $job = Job::find($id);
+        $this->authorize('update', $job);
         $job->status = $request->status;
         $job->save();
 

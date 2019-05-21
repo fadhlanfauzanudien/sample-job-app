@@ -37,17 +37,15 @@ class ImageController extends Controller
      */
     public function store(ImageRequest $request)
     {
-        // upload file ke server
-        // dapatkan file dari form
         $file = $request->file('imageFile');
-        // set destinasi
+
         $destination_path = 'uploads/';
-        // nama file ditambah dengan random string
+
         $filename = str_random(6).'_'.$file->getClientOriginalName();
         
         $file->move($destination_path, $filename);
 
-        // save file ke database
+
         $path = $destination_path . $filename;
         
         $image = new Image();
