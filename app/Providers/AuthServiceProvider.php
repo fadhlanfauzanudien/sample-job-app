@@ -28,5 +28,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view-admin-dashboard', function ($user) {
             return $user->email == 'admin@example.com';
         });
+
+        Gate::define('apply', function (?\App\User $user) {
+            if ($user === null) {
+                return true;
+            } else {
+                return $user->profile != null;
+            }
+        });
     }
 }

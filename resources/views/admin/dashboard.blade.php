@@ -3,9 +3,17 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
-    <div class="container">
-      <h1>Admin Dashboard</h1>
-      @if($jobs->count() > 0)
+  <div class="container">
+    <h1 class="text-center mb-5 mt-2">Admin Dashboard</h1>
+    <ul class="nav d-flex justify-content-center mb-5">
+      <li class="nav-item">
+        <a href="/admin/cv" class="btn btn-primary mr-2">Manage CV</a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/users" class="btn btn-primary">Manage Users</a>
+      </li>
+    </ul>
+    @if($jobs->count() > 0)
 @foreach ($jobs as $job)
   <div class="card job">
     <div class="left">

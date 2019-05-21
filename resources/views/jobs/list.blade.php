@@ -10,7 +10,6 @@
       <p class="job__description">{!! str_limit($job->description, 150) !!}</p>
       <div class="job__footer mt-2">
         <p class="job__location">Location: {{ $job->city }}</p>
-
       </div>      
     </div>
   </div>

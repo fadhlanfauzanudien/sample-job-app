@@ -10,6 +10,16 @@ html {
 body {
   font-family: 'Nunito', sans-serif;
   background-color: rgb(248, 247, 247);
+  counter-reset: Serial; 
+}
+
+.table {
+  border-collapse: separate;
+}
+
+.table tr td:first-child:before {
+  counter-increment: Serial;      /* Increment the Serial counter */
+  content: counter(Serial); /* Display the counter */
 }
 
 .content {

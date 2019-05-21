@@ -87,6 +87,7 @@ class CVController extends Controller
             $path = $file->store('public/cv');
             $cv->file = $path;
             $cv->name = $file->getClientOriginalName();
+            $cv->status = 'unread';
             $cv->save();
         }
     }
@@ -111,5 +112,22 @@ class CVController extends Controller
     {
         $cv = \App\CV::find($id);
         return \Storage::download($cv->file, $cv->name);
+    }
+
+    public function accept($id)
+    {
+        $cv = \App\CV::find($id);
+        $cv->status = 'accepted';
+        $cv->save();
+        return back();
+    }
+
+    public function reject($id)
+    {
+        $cv = \App\CV::find($id);
+        $cv->status = 'rejected';
+        $cv->save();
+
+        return back();
     }
 }

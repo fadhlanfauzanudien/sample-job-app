@@ -17,9 +17,13 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all()->where('status', 'show');
-
-        return view('jobs.index')->with('jobs', $jobs);
+        if (Gate::allows('apply')) {
+            $jobs = Job::all()->where('status', 'show');
+    
+            return view('jobs.index')->with('jobs', $jobs);
+        } else {
+            return redirect('/profile');
+        }
     }
 
     /**

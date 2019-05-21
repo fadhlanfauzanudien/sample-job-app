@@ -26,8 +26,15 @@ Route::resource('profile', 'ProfileController')->middleware('auth');
 Route::resource('image', 'ImageController');
 Route::put('/user/{id}', 'UserController@update');
 
-Route::get('/cv/upload', 'CVController@upload');
-Route::get('/cv/download/{id}', 'CVController@download');
-Route::resource('/cv', 'CVController');
+Route::group(['prefix' => '/cv'], function() {
+    Route::get('/upload', 'CVController@upload');
+    Route::get('/download/{id}', 'CVController@download');
+    Route::get('/accept/{id}', 'CVController@accept');
+    Route::get('/reject/{id}', 'CVController@reject');
+    Route::resource('/', 'CVController');
+});
+
 
 Route::get('/admin/dashboard', 'AdminController@dashboard');
+Route::get('/admin/cv', 'AdminController@cv');
+Route::get('/admin/users', 'AdminController@users');
