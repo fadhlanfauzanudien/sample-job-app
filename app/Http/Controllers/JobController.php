@@ -133,7 +133,7 @@ class JobController extends Controller
             $user->jobs()->syncWithoutDetaching($job);
 
             $message = 'Lamaran telah dikirim!'; 
-            $nextPage = '/jobs';
+            $nextPage = '/jobs/applied-job';
             return view('jobs.apply', compact('message', 'nextPage'));
         } elseif ($user->cv->status === 'unread') {
             $message = 'Your CV has not been accepted by admin';
@@ -144,5 +144,13 @@ class JobController extends Controller
             $nextPage = '/cv/upload';
             return view('jobs.apply', compact('message', 'nextPage'));
         }
+    }
+
+    public function applied()
+    {
+        $user = Auth::user();
+        $jobs = $user->jobs->all();
+
+        return view('jobs.applied', compact('jobs'));
     }
 }

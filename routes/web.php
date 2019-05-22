@@ -16,9 +16,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/jobs', 'JobController');
+Route::get('jobs/applied-job', 'JobController@applied')->name('jobs.applied');
 Route::put('/jobs/changeJobStatus/{id}', 'JobController@changeStatus');
-Route::post('/jobs/apply/{id}', 'JobController@apply');
+Route::post('/jobs/apply/{id}', 'JobController@apply')->middleware('auth');
+Route::resource('/jobs', 'JobController');
+
 
 Auth::routes();
 
@@ -27,13 +29,13 @@ Route::resource('profile', 'ProfileController')->middleware('auth');
 Route::resource('image', 'ImageController');
 Route::put('/user/{id}', 'UserController@update');
 
-Route::group(['prefix' => '/cv'], function() {
-    Route::get('/upload', 'CVController@upload');
-    Route::get('/download/{id}', 'CVController@download');
-    Route::get('/accept/{id}', 'CVController@accept');
-    Route::get('/reject/{id}', 'CVController@reject');
+Route::group(['prefix' => '/cv', 'middleware' => 'auth'], function() {
+    Route::get('upload', 'CVController@upload');
+    Route::get('download/{id}', 'CVController@download');
+    Route::get('accept/{id}', 'CVController@accept');
+    Route::get('reject/{id}', 'CVController@reject');
     Route::resource('/', 'CVController');
-});
+});\
 
 
 Route::get('/admin/dashboard', 'AdminController@dashboard');

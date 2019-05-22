@@ -38,7 +38,7 @@
         </div>
       </form>
     @else
-      <form action="{{ route('cv.store') }}" method="POST" enctype="multipart/form-data">
+      <form action="/cv" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-row pt-5 mt-3">
           <div class="input-group col-5 mx-auto mb-5 d-flex flex-column justify-content-center">
@@ -56,6 +56,7 @@
           </div>
         </div>
       </form>
+      
     @endif
       </div>
     </div>

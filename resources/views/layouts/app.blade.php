@@ -60,12 +60,17 @@
                                 </li>
                             @endif
                         @else
+                            @cannot('view-admin-dashboard')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('jobs.applied') }}">Job Applied</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/cv/upload">My CV</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/profile">Profile</a>
                             </li>
+                            @endcannot
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->firstname }} <span class="caret"></span>
