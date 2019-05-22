@@ -10,6 +10,11 @@ use \App\Job;
 
 class JobController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -129,28 +134,38 @@ class JobController extends Controller
     {
         $job = Job::find($id);
         $user = Auth::user();
-        if ($user->cv->status === 'accepted') {
-            $user->jobs()->syncWithoutDetaching($job);
 
-            $message = 'Lamaran telah dikirim!'; 
-            $nextPage = '/jobs/applied-job';
-            return view('jobs.apply', compact('message', 'nextPage'));
-        } elseif ($user->cv->status === 'unread') {
-            $message = 'Your CV has not been accepted by admin';
-            $nextPage = '/jobs';
-            return view('jobs.apply', compact('message', 'nextPage'));
+        if ($user->cv !== null) {
+            if ($user->cv->status === 'accepted') {
+                $user->jobs()->syncWithoutDetaching($job);
+    
+                $message = 'Lamaran telah dikirim!'; 
+                $nextPage = '/jobs/applied-job';
+                return view('jobs.apply', compact('message', 'nextPage'));
+            } elseif ($user->cv->status === 'unread') {
+                $message = 'Your CV has not been accepted by admin';
+                $nextPage = '/jobs';
+                return view('jobs.apply', compact('message', 'nextPage'));
+            } else {
+                $message = 'Your CV has been Rejected! Please re-upload your new CV';
+                $nextPage = '/cv/upload';
+                return view('jobs.apply', compact('message', 'nextPage'));
+            }
         } else {
-            $message = 'Your CV has been Rejected! Please re-upload your new CV';
-            $nextPage = '/cv/upload';
-            return view('jobs.apply', compact('message', 'nextPage'));
+            return redirect('/cv/upload');
         }
     }
 
     public function applied()
     {
-        $user = Auth::user();
-        $jobs = $user->jobs->all();
+        if (Gate::allows('apply')) {
+            $user = Auth::user();
+            $jobs = $user->jobs->all();
 
-        return view('jobs.applied', compact('jobs'));
+            return view('jobs.applied', compact('jobs'));
+        } else {
+            return redirect('/profile');
+        }
+        
     }
 }

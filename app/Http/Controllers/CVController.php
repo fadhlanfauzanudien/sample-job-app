@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\PDFRequest;
 
 class CVController extends Controller
@@ -89,6 +90,7 @@ class CVController extends Controller
             $cv->name = $file->getClientOriginalName();
             $cv->status = 'unread';
             $cv->save();
+            return back();
         }
     }
 
@@ -105,7 +107,12 @@ class CVController extends Controller
 
     public function upload()
     {
-        return view('cv.upload');
+        if (Gate::allows('apply')) {
+            return view('cv.upload');
+        } else {
+            return redirect('/profile');
+        }
+        
     }
 
     public function download($id)
