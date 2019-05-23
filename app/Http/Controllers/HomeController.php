@@ -32,6 +32,5 @@ class HomeController extends Controller
         } else {
             return redirect('/profile');
         }
-        return view('home');
     }
 }

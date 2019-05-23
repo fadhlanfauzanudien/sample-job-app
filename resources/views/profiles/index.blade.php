@@ -3,9 +3,13 @@
 @section('content')
   <div class="container profile-form">
     <div class="info">
-
     
     <h1 class="mt-3 text-center">Your Personal Profile</h1>
+    @if (session()->has('message'))     
+      <div class="alert alert-success" role="alert">
+        {{ session()->get('message') }}
+      </div>
+    @endif
     @if(Auth::user()->image != null)
       <form action="/image/{{ Auth::user()->image->id }}" method="POST" enctype="multipart/form-data" class="border-top mt-5">
         @csrf

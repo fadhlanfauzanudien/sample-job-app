@@ -16,10 +16,7 @@
     @if($jobs->count() > 0)
 @foreach ($jobs as $job)
   <div class="card job">
-    <div class="left">
-      <img class="job__image" src="http://lorempixel.com/400/200" alt="Card image cap" width="200px" height="200">
-    </div>
-    <div class="right">
+    <div>
       <div class="d-flex justify-content-between align-items-center">
         <a href="/jobs/{{ $job->id }}"><h1 class="job__title d-inline">{{ $job->title }}</h1></a>
         @if ($job->status === 'show')  
@@ -29,7 +26,7 @@
         @endif
       </div>
       <h2 class="job__company">{{ $job->company }}</h2>
-      <p class="job__description">{!! str_limit($job->description, 150) !!}</p>
+      <p class="job__description mt-4">{!! str_limit($job->description, 150) !!}</p>
       <div class="job__footer mt-2">
         <p class="job__location">Location: {{ $job->city }}</p>
         <div class="d-flex">

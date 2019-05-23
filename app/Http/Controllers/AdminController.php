@@ -20,26 +20,7 @@ class AdminController extends Controller
     public function cv()
     {
         if (Gate::allows('view-admin-dashboard')) {
-            $CVs = \App\CV::all();
-            return view('admin.cv')->with('CVs', $CVs);
-        } else {
-            return abort(403, 'You are not Admin');
-        }
-    }
-
-    public function filter_cv(Request $request)
-    {
-        if (Gate::allows('view-admin-dashboard')) {
-            $filterBy = $request->filter;
-            if ($filterBy === 'unread') {
-                $CVs = \App\CV::where('status', 'unread')->get();
-            } elseif ($filterBy === 'accepted') {
-                $CVs = \App\CV::where('status', 'accepted')->get();
-            } elseif ($filterBy === 'rejected') {
-                $CVs = \App\CV::where('status', 'accepted')->get();
-            } elseif ($filterBy === 'no-filter') {
-                $CVs = \App\CV::all();
-            }
+            $CVs = \App\CV::where('status', '!=', 'accepted')->get();
             return view('admin.cv')->with('CVs', $CVs);
         } else {
             return abort(403, 'You are not Admin');

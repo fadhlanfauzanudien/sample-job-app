@@ -38,10 +38,11 @@ body {
   display: flex;
   flex: 1 1;
   flex-direction: row;
+  align-items: center;
   margin: 0 auto 25px auto;
   width: 900px;
   height: 220px;
-  padding: 20px;
+  padding: 20px 30px;
 }
 
 .job__title {
@@ -55,9 +56,18 @@ body {
 }
 
 .job__company {
-  color: rgb(85, 85, 85);
+  color: rgb(92, 92, 92);
   font-size: 18px;
   font-weight: 400;
+}
+
+.job__description {
+  color: rgb(117, 117, 117);
+}
+
+.job__location {
+  color: rgb(117, 117, 117);
+  margin-bottom: 0;
 }
 
 .job__footer {

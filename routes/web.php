@@ -38,6 +38,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 Route::get('/admin/dashboard', 'AdminController@dashboard');
-Route::get('/admin/cv', 'AdminController@cv');
+Route::get('/admin/cv', 'AdminController@cv')->name('admin.cv');
 Route::post('/admin/cv/filter', 'AdminController@filter_cv');
 Route::get('/admin/users', 'AdminController@users');

@@ -43,7 +43,7 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         \App\Profile::create($request->all());
-        return back();
+        return back()->with('message', 'Your profile has been saved!');
     }
 
     /**
@@ -78,7 +78,7 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         \App\Profile::find($id)->update($request->all());
-        return back();
+        return back()->with('message', 'Your profile has been updated!');;
     }
 
     /**
