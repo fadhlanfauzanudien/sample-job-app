@@ -13,7 +13,7 @@ use App\Http\Controllers\CVController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/jobs');
 });
 
 Route::put('/jobs/changeJobStatus/{id}', 'JobController@changeStatus');
@@ -39,4 +39,5 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/admin/dashboard', 'AdminController@dashboard');
 Route::get('/admin/cv', 'AdminController@cv');
+Route::post('/admin/cv/filter', 'AdminController@filter_cv');
 Route::get('/admin/users', 'AdminController@users');
