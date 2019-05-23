@@ -15,12 +15,12 @@ class ProfileController extends Controller
     public function index()
     {
         // get user firstname and lastname to display in index view
-        $firstname = Auth::user()->firstname;
-        $lastname = Auth::user()->lastname;
-        $date = Auth::user()->date_of_birth;
-        $email = Auth::user()->email;
+        $firstname = current_user()->firstname;
+        $lastname = current_user()->lastname;
+        $date = current_user()->date_of_birth;
+        $email = current_user()->email;
 
-        $profile = Auth::user()->profile;
+        $profile = current_user()->profile;
         return view('profiles.index', compact(['firstname', 'lastname', 'date', 'email', 'profile']));
     }
 

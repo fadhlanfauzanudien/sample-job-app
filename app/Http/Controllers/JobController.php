@@ -133,7 +133,7 @@ class JobController extends Controller
     public function apply($id)
     {
         $job = Job::find($id);
-        $user = Auth::user();
+        $user = current_user();
 
         if ($user->cv !== null) {
             if ($user->cv->status === 'accepted') {
@@ -159,7 +159,7 @@ class JobController extends Controller
     public function applied()
     {
         if (Gate::allows('apply')) {
-            $user = Auth::user();
+            $user = current_user();
             $jobs = $user->jobs->all();
 
             return view('jobs.applied', compact('jobs'));

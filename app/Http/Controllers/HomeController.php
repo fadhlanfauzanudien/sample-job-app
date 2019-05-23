@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = current_user();
         if ($user->email === 'admin@example.com') {
             return redirect('/admin/dashboard');
         } else if ($user->profile != null) {

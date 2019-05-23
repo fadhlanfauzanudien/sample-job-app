@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
   @if ($jobs != null)
       
     <table class="table">
@@ -26,5 +27,6 @@
   @else 
     <h2 class="text-center mt-5">You havent applied for a job</h2>
   @endif
+</div>
 
 @endsection
