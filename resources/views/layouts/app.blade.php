@@ -33,17 +33,19 @@
                         <li class="nav-item">
                             <a class="nav-link " href="/jobs">Jobs</a>
                         </li>
-                        @cannot('view-admin-dashboard')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('jobs.applied') }}">Job Applied</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cv/upload">My CV</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/profile">Profile</a>
-                            </li>
-                        @endcannot
+                        @auth
+                            @cannot('view-admin-dashboard')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('jobs.applied') }}">Job Applied</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/cv/upload">My CV</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/profile">Profile</a>
+                                </li>
+                            @endcannot
+                        @endauth
                         @if (Gate::allows('view-admin-dashboard'))
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/dashboard">Admin Dashboard</a>
