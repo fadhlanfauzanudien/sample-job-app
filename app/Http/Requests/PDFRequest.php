@@ -24,7 +24,7 @@ class PDFRequest extends FormRequest
     public function rules()
     {
         return [
-            'cvFile' => 'file|mimes:pdf'
+            'cvFile' => 'required|file|mimes:pdf|max:2048'
         ];
     }
 }

@@ -34,6 +34,9 @@
             @error('cvFile')
               <p class="text-danger">{{ $message }}</p>
             @enderror
+            @if (Session::has('message'))
+              <p class="text-danger">{{ $message }}</p>
+            @endif
           </div>
         </div>
       </form>
@@ -53,6 +56,9 @@
             @error('cvFile')
               <p class="text-danger">{{ $message }}</p>
             @enderror
+            @if (session()->has('error'))
+              <p class="text-danger">{{ $error }}</p>
+            @endif
           </div>
         </div>
       </form>

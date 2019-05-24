@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PDFRequest;
 
 class CVController extends Controller
@@ -37,16 +38,28 @@ class CVController extends Controller
      */
     public function store(PDFRequest $request)
     {
-        $file = $request->file('cvFile');
-        $path = $file->store('public/cv');
-        
-        $cv = new \App\CV();
-        $cv->file = $path;
-        $cv->name = $file->getClientOriginalName();
-        $cv->user_id = Auth::user()->id;
-        $cv->save();
+        if ($request->has('cvFile')) {
+            DB::beginTransaction();
 
-        return back();
+            try {
+                $file = $request->file('cvFile');
+                $path = $file->store('public/cv');
+                $cv = new \App\CV();
+                $cv->file = $path;
+                $cv->name = $file->getClientOriginalName();
+                $cv->user_id = Auth::user()->id;
+                $cv->save();
+            } catch(\Exception $e) {
+                DB::rollBack();
+
+                return back()->with('error', $e->getErrors());
+            }
+
+            DB::commit();
+            return back();
+        }
+
+        
     }
 
     /**
@@ -78,18 +91,27 @@ class CVController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PDFRequest $request, $id)
     {
         $cv = \App\CV::find($id);
         $file_exists = \Storage::exists($cv->file);
         if($file_exists) {
-            \Storage::delete($cv->file);
-            $file = $request->file('cvFile');
-            $path = $file->store('public/cv');
-            $cv->file = $path;
-            $cv->name = $file->getClientOriginalName();
-            $cv->status = 'unread';
-            $cv->save();
+            DB::beginTransaction();
+            
+            try {
+                \Storage::delete($cv->file);
+                $file = $request->file('cvFile');
+                $path = $file->store('public/cv');
+                $cv->file = $path;
+                $cv->name = $file->getClientOriginalName();
+                $cv->status = 'unread';
+                $cv->save();
+            } catch(\Exception $e) {
+                DB::rollBack();
+                return back()->with('message', $e->getErrors());
+            }
+
+            DB::commit();
             return back();
         }
     }
